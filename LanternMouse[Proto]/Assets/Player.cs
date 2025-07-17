@@ -8,10 +8,10 @@ public class Player : MonoBehaviour
     public Rigidbody playerRigid;
     public Transform playerTrans;
 
-    public float walkSpeed = 3f;
-    public float backwardSpeed = 2f;
-    public float runSpeed = 6f;
-    public float rotationSpeed = 100f;
+    public float walkSpeed = 90;
+    public float backwardSpeed = 90;
+    public float runSpeed = 140;
+    public float rotationSpeed = 100;
 
     private bool isWalking = false;
     private bool isRunning = false;
@@ -20,12 +20,14 @@ public class Player : MonoBehaviour
     {
         Vector3 moveDirection = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.W))
+        float verticalInput = Input.GetAxis("Vertical");
+
+        if (verticalInput > 0.1)
         {
             moveDirection += transform.forward * (isRunning ? runSpeed : walkSpeed);
         }
 
-        if (Input.GetKey(KeyCode.S))
+        if (verticalInput < -0.1)
         {
             moveDirection -= transform.forward * backwardSpeed;
         }
@@ -35,54 +37,48 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // Handle rotation
-        if (Input.GetKey(KeyCode.A))
+        // Handle rotation via left stick X-axis
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        if (horizontalInput < -0.1f)
         {
             playerTrans.Rotate(Vector3.up, -rotationSpeed * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (horizontalInput > 0.1f)
         {
             playerTrans.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
 
-        // Animation and movement input
-        if (Input.GetKeyDown(KeyCode.W))
+        // Handle animation logic
+        float verticalInput = Input.GetAxis("Vertical");
+
+        if (verticalInput > 0.1f && !isWalking)
         {
             playerAnim.SetTrigger("Walk");
             playerAnim.ResetTrigger("Idle");
             isWalking = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.W))
+        if (verticalInput < 0.1f && isWalking && !Input.GetKey(KeyCode.JoystickButton5))
         {
             playerAnim.ResetTrigger("Walk");
             playerAnim.SetTrigger("Idle");
             isWalking = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            playerAnim.SetTrigger("Walk");
-            playerAnim.ResetTrigger("Idle");
-        }
-
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            playerAnim.ResetTrigger("Walk");
-            playerAnim.SetTrigger("Idle");
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && isWalking)
+        // Run input using R trigger (JoystickButton5)
+        if (Input.GetKeyDown(KeyCode.JoystickButton5) && isWalking)
         {
             playerAnim.ResetTrigger("Walk");
             playerAnim.SetTrigger("Run");
             isRunning = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
+        if (Input.GetKeyUp(KeyCode.JoystickButton5))
         {
             playerAnim.ResetTrigger("Run");
+
             if (isWalking)
                 playerAnim.SetTrigger("Walk");
             else
@@ -91,5 +87,4 @@ public class Player : MonoBehaviour
             isRunning = false;
         }
     }
-
 }
