@@ -34,12 +34,13 @@ Want to try building it yourself? Here’s how:
 
 1. **Clone the repository**  
    ```bash
-   git clone https://github.com/yourusername/lantern-mouse.git
+   git clone https://github.com/Jyotiraditya-Samal/LanternMouse.git
    ```
 2. **Open in Unity 2018**  
    - Start Unity 2018 and open the project folder.
 3. **Build the Unity project**  
    - Go to `File > Build Settings`, target *PlayStation Vita* (with required plugins).
+   - *note: you'll need a unity ps-vita developer license to use the build tools for vita
    - Export the build to a directory, e.g., `Build/`.
 4. **Create the VPK using `unitybuilder.py`**  
    ```bash
