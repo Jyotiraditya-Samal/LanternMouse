@@ -1,5 +1,7 @@
 # Lantern Mouse 🕯️🐭
-![](Assets/milo-chicken-dance.gif)
+<p>
+  <img src="Assets/milo-chicken-dance.gif" alt="chicken-dance-milo" width="400"/>
+</p>
 
 **Lantern Mouse** is a puzzle platformer developed in Unity 2018, being created as a submission for the ReiHen PS Vita Homebrew Contest! This project brings an adorable new character and a fresh gameplay experience to the PlayStation Vita. 🕹️✨
 
